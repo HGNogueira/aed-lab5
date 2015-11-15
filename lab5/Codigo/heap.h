@@ -23,7 +23,7 @@
 
 typedef struct _heap Heap;
 
-Heap *NewHeap(int tamanho, int (*less) (Item, Item), void (*print) (Item));
+Heap *NewHeap(int tamanho, int (*less) (Item, Item), void (*print) (Item), void (*freeItem)(Item));
 
 void FreeHeap(Heap * h);
 

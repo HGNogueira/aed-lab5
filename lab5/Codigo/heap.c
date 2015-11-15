@@ -34,6 +34,7 @@ struct _heap {
   int n_elements;               /* # elements in heap */
   int size;                     /* max size of the heap. */
   Item *heapdata;               /* An array of Items. */
+  void (*freeItem)(Item);
 };
 
 void (*PrintItem) (Item);
@@ -201,7 +202,7 @@ int FixDown(Heap * h, int k)
  *
  *****************************************************************************/
 
-Heap *NewHeap(int size, int (*less) (Item, Item), void (*print) (Item))
+Heap *NewHeap(int size, int (*less) (Item, Item), void (*print) (Item), void (*freeItem)(Item))
 {
   Heap *h;
 
@@ -214,6 +215,7 @@ Heap *NewHeap(int size, int (*less) (Item, Item), void (*print) (Item))
   h->n_elements = 0;
   h->less = less;
   h->print = print;
+  h->freeItem = freeItem;
   h->size = size;
   h->heapdata = (Item *) malloc(size * sizeof(Item));
   if (h->heapdata == ((Item *) NULL)) {
@@ -382,7 +384,7 @@ void CleanHeap(Heap * h)
     int i = 0;
 
     for(i = 0; i < h->n_elements; i++) 
-        free(h->heapdata[i]);
+        h->freeItem(h->heapdata[i]);
     h->n_elements = 0;
     
     return;

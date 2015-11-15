@@ -334,6 +334,10 @@ void PrintOptions()
  *				insert, modify, removemax, sort and exit
  *
  *****************************************************************************/
+void freeElement(Item elem) {
+    free((int*) elem);
+    return;
+}
 
 int main(int argc, char **argv)
 {
@@ -341,7 +345,7 @@ int main(int argc, char **argv)
   Heap *h;
 
   /* HEAPSIZE defined at the top of this file */
-  h = NewHeap(HEAPSIZE, LessNum, PrintNum);
+  h = NewHeap(HEAPSIZE, LessNum, PrintNum, freeElement);
 
   do {
     PrintOptions();
