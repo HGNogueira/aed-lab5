@@ -65,7 +65,7 @@ int LessNum(Item a, Item b)
   aa = *((int *) a);
   bb = *((int *) b);
 
-  return (aa < bb);
+  return (aa <= bb);
 }
 
 
